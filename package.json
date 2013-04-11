@@ -1,6 +1,6 @@
 {
   "name": "httpserver",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "command line HTTP server tool for serving up local files, similar to python -mSimpleHTTPServer",
   "author": "Dave Eddy <dave@daveeddy.com> (http://www.daveeddy.com)",
   "main": "./httpserver.js",
