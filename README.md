@@ -1,7 +1,7 @@
 httpserver
 ==========
 
-command line HTTP server tool for serving up local files, similar to python -mSimpleHTTPServer
+command line HTTP server tool for serving up local files, similar to `python -mSimpleHTTPServer`
 
 Installation
 ------------
