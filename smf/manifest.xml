@@ -1,0 +1,25 @@
+<?xml version='1.0'?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+<service_bundle type='manifest' name='application-httpserver'>
+	<service name='application/httpserver' type='service' version='0'>
+		<create_default_instance enabled='true'/>
+		<dependency name='dep0' grouping='require_all' restart_on='error' type='service'>
+			<service_fmri value='svc:/milestone/multi-user:default'/>
+		</dependency>
+		<method_context working_directory='/path/to/www'><!-- changeme -->
+			<method_credential user='nobody' group='other'/>
+			<method_environment>
+				<envvar name='PATH' value='/bin:/usr/bin:/sbin:/usr/sbin:/opt/local/bin:/opt/local/sbin'/>
+				<envvar name='NODE_HOST' value='0.0.0.0'/><!-- changeme -->
+				<envvar name='NODE_PORT' value='8080'/><!-- changeme -->
+			</method_environment>
+		</method_context>
+		<exec_method name='start' type='method' exec='/opt/local/bin/httpserver &amp;' timeout_seconds='10'/><!-- changeme maybe -->
+		<exec_method name='stop' type='method' exec=':kill' timeout_seconds='30'/>
+		<template>
+			<common_name>
+				<loctext xml:lang='C'>Simple HTTP Server</loctext>
+			</common_name>
+		</template>
+	</service>
+</service_bundle>

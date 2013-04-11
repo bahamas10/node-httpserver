@@ -1,0 +1,21 @@
+{
+  "name": "httpserver",
+  "version": "0.0.0",
+  "description": "command line HTTP server tool for serving up local files, similar to python -mSimpleHTTPServer",
+  "author": "Dave Eddy <dave@daveeddy.com> (http://www.daveeddy.com)",
+  "main": "./httpserver.js",
+  "preferGlobal": true,
+  "bin": {
+    "httpserver": "./httpserver.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "git://github.com/bahamas10/node-httpserver.git",
+  "license": "MIT",
+  "dependencies": {
+    "access-log": "~0.1.1",
+    "log-timestamp": "~0.0.5",
+    "mime": "~1.2.9"
+  }
+}
