@@ -43,7 +43,7 @@ function onrequest(req, res) {
   fs.stat(file, function(err, stats) {
     if (err) {
       console.error(err.message);
-      res.statusCode = 500;
+      res.statusCode = 404;
       res.end();
       return;
     }
