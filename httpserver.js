@@ -37,7 +37,7 @@ function onrequest(req, res) {
   req.urlparsed = url.parse(req.url, true);
   req.urlparsed.pathname = path.normalize(req.urlparsed.pathname);
 
-  var file = path.join(process.cwd(), req.urlparsed.pathname);
+  var file = path.join(process.cwd(), decodeURI(req.urlparsed.pathname));
 
   // the user wants some actual data
   fs.stat(file, function(err, stats) {
