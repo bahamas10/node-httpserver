@@ -49,6 +49,7 @@ function onrequest(req, res) {
     }
 
     if (stats.isDirectory()) {
+      // dir
       fs.readdir(file, function(e, ret) {
         if (e) {
           console.error(e.message);
@@ -56,10 +57,19 @@ function onrequest(req, res) {
           res.end();
           return;
         }
-        res.setHeader('Content-Type', 'application/json; charset=utf-8');
-        res.end(JSON.stringify(ret));
+        if (req.urlparsed.query.hasOwnProperty('json')) {
+          res.setHeader('Content-Type', 'application/json; charset=utf-8');
+          res.end(JSON.stringify(ret));
+        } else {
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          ret.forEach(function(name) {
+            res.write(name.link(name) + '<br>');
+          });
+          res.end();
+        }
       });
     } else {
+      // file
       var etag = '"' + stats.size + '-' + Date.parse(stats.mtime) + '"';
       res.setHeader('Last-Modified', stats.mtime);
 

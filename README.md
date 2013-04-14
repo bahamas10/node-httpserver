@@ -59,7 +59,7 @@ on the machine are also printed for you
 - Configurable - Command line options and environmental variables can modify behavior at runtime
 - Safe - All other packages I found online were susceptible to directory traversal. This isn't
 - Simple - All code is in one file
-- Parsable - GET requests to directories are returned as JSON
+- Parsable - GET requests to directories are returned as directory listings, add `?json` for JSON
 - Proper HTTP - Proper Mime types (using the Mime module) and Caching headers are returned
 
 License
