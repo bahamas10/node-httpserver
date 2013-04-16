@@ -58,13 +58,14 @@ function onrequest(req, res) {
           return;
         }
         ret.sort();
+        ret = ['.', '..'].concat(ret);
         if (req.urlparsed.query.hasOwnProperty('json')) {
           res.setHeader('Content-Type', 'application/json; charset=utf-8');
           res.end(JSON.stringify(ret));
         } else {
           res.setHeader('Content-Type', 'text/html; charset=utf-8');
           ret.forEach(function(name) {
-            res.write(name.link(name) + '<br>');
+            res.write(name.link(path.join(req.urlparsed.pathname, name)) + '<br>');
           });
           res.end();
         }
