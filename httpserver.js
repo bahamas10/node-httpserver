@@ -57,6 +57,7 @@ function onrequest(req, res) {
           res.end();
           return;
         }
+        ret.sort();
         if (req.urlparsed.query.hasOwnProperty('json')) {
           res.setHeader('Content-Type', 'application/json; charset=utf-8');
           res.end(JSON.stringify(ret));
