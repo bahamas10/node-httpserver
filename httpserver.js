@@ -14,6 +14,7 @@ var path = require('path');
 var url = require('url');
 
 var accesslog = require('access-log');
+var easyreq = require('easyreq');
 var mime = require('mime');
 
 var host = process.argv[3] || process.env.NODE_HOST || '0.0.0.0';
@@ -31,11 +32,8 @@ function listening() {
 }
 
 function onrequest(req, res) {
+  easyreq(req, res);
   accesslog(req, res);
-
-  // parse the URL and normalize the pathname
-  req.urlparsed = url.parse(req.url, true);
-  req.urlparsed.pathname = path.normalize(req.urlparsed.pathname);
 
   var file = path.join(process.cwd(), decodeURI(req.urlparsed.pathname));
 
@@ -43,8 +41,7 @@ function onrequest(req, res) {
   fs.stat(file, function(err, stats) {
     if (err) {
       console.error(err.message);
-      res.statusCode = 404;
-      res.end();
+      res.notfound();
       return;
     }
 
@@ -53,8 +50,7 @@ function onrequest(req, res) {
       fs.readdir(file, function(e, ret) {
         if (e) {
           console.error(e.message);
-          res.statusCode = 500;
-          res.end();
+          res.error();
           return;
         }
         ret.sort();
@@ -64,9 +60,11 @@ function onrequest(req, res) {
           res.end(JSON.stringify(ret));
         } else {
           res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          res.write('<ul>\n');
           ret.forEach(function(name) {
-            res.write(name.link(path.join(req.urlparsed.pathname, name)) + '<br>');
+            res.write('<li>' + name.link(path.join(req.urlparsed.pathname, name)) + '</li>\n');
           });
+          res.write('</ul>');
           res.end();
         }
       });
