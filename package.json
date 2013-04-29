@@ -1,6 +1,6 @@
 {
   "name": "httpserver",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "command line HTTP server tool for serving up local files, similar to python -mSimpleHTTPServer",
   "author": "Dave Eddy <dave@daveeddy.com> (http://www.daveeddy.com)",
   "main": "./httpserver.js",
@@ -17,6 +17,6 @@
     "access-log": "~0.1.1",
     "log-timestamp": "~0.0.5",
     "easyreq": "~0.0.0",
-    "static-route": "0.0.0"
+    "static-route": "~0.0.0"
   }
 }
