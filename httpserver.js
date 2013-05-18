@@ -7,6 +7,7 @@
  * License: MIT
  */
 
+var fs = require('fs');
 var http = require('http');
 var os = require('os');
 
