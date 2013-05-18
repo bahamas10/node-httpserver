@@ -12,7 +12,7 @@ var os = require('os');
 
 var accesslog = require('access-log');
 var easyreq = require('easyreq');
-var staticroute = require('static-route')({autoindex: true});
+var staticroute = require('static-route')({autoindex: true, logger: function() {}});
 
 var host = process.argv[3] || process.env.NODE_HOST || '0.0.0.0';
 var port = +process.argv[2] || +process.env.NODE_PORT || 8080;
