@@ -17,6 +17,6 @@
     "access-log": "~0.1.1",
     "log-timestamp": "~0.0.5",
     "easyreq": "~0.0.0",
-    "static-route": "~0.0.3"
+    "static-route": "~0.0.5"
   }
 }
