@@ -31,7 +31,6 @@ console.log(JSON.stringify(getipv4addresses(), null, 2));
 http.createServer(onrequest).listen(port, host, listening);
 
 function listening() {
-  require('log-timestamp');
   console.log('server started: http://%s:%d', host, port);
 }
 

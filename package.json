@@ -14,8 +14,7 @@
   "repository": "git://github.com/bahamas10/node-httpserver.git",
   "license": "MIT",
   "dependencies": {
-    "access-log": "~0.1.1",
-    "log-timestamp": "~0.0.5",
+    "access-log": "~0.2.3",
     "easyreq": "~0.0.0",
     "static-route": "~0.0.5"
   }
