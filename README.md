@@ -17,10 +17,10 @@ run `httpserver` on the command line to fire up a server on `0.0.0.0` port `8080
 
     $ httpserver
     {
-      "lo": "127.0.0.1",
-      "eth0": "10.0.1.16"
+      "lo0": "127.0.0.1",
+      "en1": "10.0.1.204"
     }
-    [2013-04-11T05:31:53.895Z] server started: http://0.0.0.0:8080
+    server started: http://0.0.0.0:8080
 
 
 See the page at [http://localhost:8080][1].
@@ -39,14 +39,12 @@ example
 
     $ httpserver
     {
-      "lo": "127.0.0.1",
-      "eth0": "10.0.1.16"
+      "lo0": "127.0.0.1",
+      "en1": "10.0.1.204"
     }
-    [2013-04-11T05:30:13.895Z] server started: http://0.0.0.0:8080
-    [2013-04-11T05:30:32.328Z] 127.0.0.1 GET 200 / (2ms)
-    [2013-04-11T05:30:41.186Z] 127.0.0.1 GET 404 /fake.txt (1ms)
-    [2013-04-11T05:30:49.541Z] 127.0.0.1 GET 200 /.npmignore (10ms)
-    [2013-04-11T05:30:54.300Z] 127.0.0.1 GET 200 /.gitignore (3ms)
+    server started: http://0.0.0.0:8080
+    127.0.0.1 - - [30/Oct/2013:18:24:38 -0400] "GET / HTTP/1.1" 200 - "-" "curl/7.30.0"
+    127.0.0.1 - - [30/Oct/2013:18:24:41 -0400] "GET /test/ HTTP/1.1" 404 - "-" "curl/7.30.0"
 
 Why?
 ----
