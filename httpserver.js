@@ -13,25 +13,84 @@ var os = require('os');
 
 var accesslog = require('access-log');
 var easyreq = require('easyreq');
+var getopt = require('posix-getopt');
+
+var package = require('./package.json');
+
+function usage() {
+  return [
+    'usage: httpserver [options] [port] [host]',
+    '',
+    'command line HTTP server tool for serving up local files, similar to python -mSimpleHTTPServer',
+    '',
+    'options',
+    '  -d, --disable-index       disable reading of index.html/index.htm if found, env HTTPSERVER_DISABLE_INDEX',
+    '  -h, --help                print this message and exit',
+    '  -H, --host <host>         the host address on which to listen, env HTTPSERVER_HOST defaults to ' + (opts.host || '0.0.0.0'),
+    '  -n, --no-indexes          return 403 for directory requests instead of a directory listing, env HTTPSERVER_NO_INDEXES',
+    '  -p, --port <port>         the port on which to listen, env HTTPSERVER_PORT, defaults to ' + (opts.port || 8080),
+    '  -u, --updates             check for available updates on npm',
+    '  -v, --version             print the version number and exit'
+  ].join('\n');
+}
+
+// command line arguments
+var options = [
+  'd(disable-index)',
+  'h(help)',
+  'H:(host)',
+  'n(no-indexes)',
+  'p:(port)',
+  'u(updates)',
+  'v(version)'
+].join('');
+var parser = new getopt.BasicParser(options, process.argv);
+
+var opts = {
+  disableindex: false,
+  host: process.env.HTTPSERVER_HOST || process.env.NODE_HOST,
+  noindex: false,
+  port: process.env.HTTPSERVER_PORT || process.env.NODE_PORT,
+};
+var option;
+while ((option = parser.getopt()) !== undefined) {
+  switch (option.option) {
+    case 'd': opts.disableindex = true; break;
+    case 'h': console.log(usage()); process.exit(0);
+    case 'H': opts.host = option.optarg; break;
+    case 'n': opts.noindexes = true; break;
+    case 'p': opts.port = option.optarg; break;
+    case 'u': // check for updates
+      require('latest').checkupdate(package, function(ret, msg) {
+        console.log(msg);
+        process.exit(ret);
+      });
+      return;
+    case 'v': console.log(package.version); process.exit(0);
+    default: console.error(usage()); process.exit(1); break;
+  }
+}
+var args = process.argv.slice(parser.optind());
+
 var staticroute = require('static-route')(
   {
-    autoindex: true,
+    autoindex: !opts.noindexes,
     logger: function() {},
-    tryfiles: ['index.html', 'index.htm']
+    tryfiles: opts.disableindex ? [] : ['index.html', 'index.htm']
   }
 );
 
-var host = process.argv[3] || process.env.NODE_HOST || '0.0.0.0';
-var port = +process.argv[2] || +process.env.NODE_PORT || 8080;
+opts.host = args[1] || opts.host || '0.0.0.0';
+opts.port = args[0] || opts.port || 8080;
 
 // print all ipv4 addresses
 console.log(JSON.stringify(getipv4addresses(), null, 2));
 
 // start the server
-http.createServer(onrequest).listen(port, host, listening);
+http.createServer(onrequest).listen(opts.port, opts.host, listening);
 
 function listening() {
-  console.log('server started: http://%s:%d', host, port);
+  console.log('server started: http://%s:%d', opts.host, opts.port);
 }
 
 function onrequest(req, res) {

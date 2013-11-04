@@ -16,6 +16,8 @@
   "dependencies": {
     "access-log": "~0.2.3",
     "easyreq": "~0.0.0",
-    "static-route": "~0.0.5"
+    "static-route": "~0.0.5",
+    "posix-getopt": "~1.0.0",
+    "latest": "~0.1.2"
   }
 }
