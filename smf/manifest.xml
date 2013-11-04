@@ -10,8 +10,8 @@
 			<method_credential user='nobody' group='other'/>
 			<method_environment>
 				<envvar name='PATH' value='/bin:/usr/bin:/sbin:/usr/sbin:/opt/local/bin:/opt/local/sbin'/>
-				<envvar name='NODE_HOST' value='0.0.0.0'/><!-- changeme -->
-				<envvar name='NODE_PORT' value='8080'/><!-- changeme -->
+				<envvar name='HTTPSERVER_HOST' value='0.0.0.0'/><!-- changeme -->
+				<envvar name='HTTPSERVER_PORT' value='8080'/><!-- changeme -->
 			</method_environment>
 		</method_context>
 		<exec_method name='start' type='method' exec='/opt/local/bin/httpserver &amp;' timeout_seconds='10'/><!-- changeme maybe -->
