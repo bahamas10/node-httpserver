@@ -12,7 +12,6 @@ var http = require('http');
 var os = require('os');
 
 var accesslog = require('access-log');
-var easyreq = require('easyreq');
 var getopt = require('posix-getopt');
 
 var package = require('./package.json');
@@ -84,7 +83,10 @@ opts.host = args[1] || opts.host || '0.0.0.0';
 opts.port = args[0] || opts.port || 8080;
 
 // print all ipv4 addresses
-console.log(JSON.stringify(getipv4addresses(), null, 2));
+var ipv4 = getipv4addresses();
+Object.keys(ipv4).forEach(function(iface) {
+  console.log('%s: %s', iface, ipv4[iface]);
+});
 
 // start the server
 http.createServer(onrequest).listen(opts.port, opts.host, listening);
@@ -94,7 +96,6 @@ function listening() {
 }
 
 function onrequest(req, res) {
-  easyreq(req, res);
   accesslog(req, res);
   staticroute(req, res);
 }
