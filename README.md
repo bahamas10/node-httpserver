@@ -51,8 +51,8 @@ Environmental Variables
 
 - `HTTPSERVER_HOST` host to serve from, defaults to `0.0.0.0`
 - `HTTPSERVER_PORT` port to serve from, defaults to `8080`
-- `HTTPSERVER_DISABLE_INDEX` disable reading of index.html/index.htm if found
-- `HTTPSERVER_NO_INDEXES` return 403 for directory listings
+- `HTTPSERVER_NO_INDEX` disable reading of index.html/index.htm if found
+- `HTTPSERVER_NO_DIR_LISTING` return 403 for directory listings
 
 Advanced Usage
 --------------
@@ -62,10 +62,10 @@ Advanced Usage
     command line HTTP server tool for serving up local files, similar to python -mSimpleHTTPServer
 
     options
-      -d, --disable-index       disable reading of index.html/index.htm if found, env HTTPSERVER_DISABLE_INDEX
+      -d, --disable-index       disable reading of index.html/index.htm if found, env HTTPSERVER_NO_INDEX
       -h, --help                print this message and exit
       -H, --host <host>         the host address on which to listen, env HTTPSERVER_HOST defaults to '0.0.0.0'
-      -n, --no-indexes          return 403 for directory requests instead of a directory listing, env HTTPSERVER_NO_INDEXES
+      -n, --no-indexes          return 403 for directory requests instead of a directory listing, env HTTPSERVER_NO_DIR_LISTING
       -p, --port <port>         the port on which to listen, env HTTPSERVER_PORT, defaults to 8080
       -u, --updates             check for available updates on npm
       -v, --version             print the version number and exit

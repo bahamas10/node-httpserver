@@ -7,7 +7,6 @@
  * License: MIT
  */
 
-var fs = require('fs');
 var http = require('http');
 var os = require('os');
 
@@ -23,10 +22,10 @@ function usage() {
     'command line HTTP server tool for serving up local files, similar to python -mSimpleHTTPServer',
     '',
     'options',
-    '  -d, --disable-index       disable reading of index.html/index.htm if found, env HTTPSERVER_DISABLE_INDEX',
+    '  -d, --no-index            disable reading of index.html/index.htm if found, env HTTPSERVER_NO_INDEX',
     '  -h, --help                print this message and exit',
     '  -H, --host <host>         the host address on which to listen, env HTTPSERVER_HOST defaults to ' + (opts.host || '0.0.0.0'),
-    '  -n, --no-indexes          return 403 for directory requests instead of a directory listing, env HTTPSERVER_NO_INDEXES',
+    '  -n, --no-dir-listing      return 403 for directory requests instead of a directory listing, env HTTPSERVER_NO_DIR_LISTING',
     '  -p, --port <port>         the port on which to listen, env HTTPSERVER_PORT, defaults to ' + (opts.port || 8080),
     '  -u, --updates             check for available updates on npm',
     '  -v, --version             print the version number and exit'
@@ -46,9 +45,9 @@ var options = [
 var parser = new getopt.BasicParser(options, process.argv);
 
 var opts = {
-  disableindex: false,
+  disableindex: process.env.HTTPSERVER_NO_INDEX,
   host: process.env.HTTPSERVER_HOST || process.env.NODE_HOST,
-  noindex: false,
+  nodir: process.env.HTTPSERVER_NO_DIR_LISTING,
   port: process.env.HTTPSERVER_PORT || process.env.NODE_PORT,
 };
 var option;
@@ -57,7 +56,7 @@ while ((option = parser.getopt()) !== undefined) {
     case 'd': opts.disableindex = true; break;
     case 'h': console.log(usage()); process.exit(0);
     case 'H': opts.host = option.optarg; break;
-    case 'n': opts.noindexes = true; break;
+    case 'n': opts.nodir = true; break;
     case 'p': opts.port = option.optarg; break;
     case 'u': // check for updates
       require('latest').checkupdate(package, function(ret, msg) {
@@ -73,7 +72,7 @@ var args = process.argv.slice(parser.optind());
 
 var staticroute = require('static-route')(
   {
-    autoindex: !opts.noindexes,
+    autoindex: !opts.nodir,
     logger: function() {},
     tryfiles: opts.disableindex ? [] : ['index.html', 'index.htm']
   }
